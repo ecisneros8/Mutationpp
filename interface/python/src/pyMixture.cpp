@@ -953,7 +953,9 @@ void py_export_Mixture(py::module &m) {
      .def(
           "getEnergiesMass",
           [](const Mutation::Mixture &self) {
-            std::vector<double> e_i(self.nSpecies());
+            // The state model writes one block of species per energy
+            // equation, the totals first.
+            std::vector<double> e_i(self.nSpecies() * self.nEnergyEqns());
             self.Mutation::Mixture::getEnergiesMass(e_i.data());
             return py::array(py::cast(e_i));
           },
@@ -963,7 +965,9 @@ void py_export_Mixture(py::module &m) {
      .def(
           "getEnthalpiesMass",
           [](const Mutation::Mixture &self) {
-            std::vector<double> h_i(self.nSpecies());
+            // The state model writes one block of species per energy
+            // equation, the totals first.
+            std::vector<double> h_i(self.nSpecies() * self.nEnergyEqns());
             self.Mutation::Mixture::getEnthalpiesMass(h_i.data());
             return py::array(py::cast(h_i));
           },
@@ -973,7 +977,9 @@ void py_export_Mixture(py::module &m) {
      .def(
           "getCpsMass",
           [](const Mutation::Mixture &self) {
-            std::vector<double> cp_i(self.nSpecies());
+            // The state model writes one block of species per energy
+            // equation, the totals first.
+            std::vector<double> cp_i(self.nSpecies() * self.nEnergyEqns());
             self.Mutation::Mixture::getCpsMass(cp_i.data());
             return py::array(py::cast(cp_i));
           },
@@ -983,7 +989,9 @@ void py_export_Mixture(py::module &m) {
      .def(
           "getCvsMass",
           [](const Mutation::Mixture &self) {
-            std::vector<double> cv_i(self.nSpecies());
+            // The state model writes one block of species per energy
+            // equation, the totals first.
+            std::vector<double> cv_i(self.nSpecies() * self.nEnergyEqns());
             self.Mutation::Mixture::getCvsMass(cv_i.data());
             return py::array(py::cast(cv_i));
           },
